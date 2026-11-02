@@ -1,4 +1,5 @@
-/* @import "tailwindcss"; */
+@import "tailwindcss";
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -51,20 +52,24 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  min-height: 100vh;
 }
 
 h1,
@@ -111,15 +116,22 @@ code {
   background: var(--code-bg);
 }
 
-/* @tailwindcss base;
-@tailwindcss components;
-@tailwindcss utilities;
-
 @layer base {
   body {
-    @apply bg-corporate-light text-corporate font-sans antialiased;
+    @apply bg-corporate-light text-corporate antialiased;
   }
-  html {
-    scroll-behavior: smooth;
-  }
-} */
+}
+
+@theme {
+  --color-corporate-light: #f8fafc;
+  --color-corporate-primary: #2563eb;
+  --color-corporate-dark: #0f172a;
+  --color-corporate-muted: #64748b;
+}
+
+@theme {
+  --color-corporate: #2563eb;
+  --color-corporate-light: #f8fafc;
+  --color-corporate-dark: #0f172a;
+  --color-corporate-muted: #64748b;
+}

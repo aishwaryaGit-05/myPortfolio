@@ -4,19 +4,19 @@ import { portfolioData } from '../data';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const links = ['About', 'Skills', 'Projects', 'Contact'];
+  const links = ['About', 'Skills', 'Projects'];
 
   return (
-    <nav className="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50 transition-all">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <nav className="fixed w-full backdrop-blur-sm shadow-sm z-50 transition-all nav-style">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <a href="#" className="text-xl font-bold text-corporate-primary">
-            {portfolioData.name}<span className="text-corporate">.</span>
+          <a href="#" className="text-m font-bold">
+            {portfolioData.name}'s<span className="ml-2">Porfolio</span>
           </a>
           
           <div className="hidden md:flex space-x-8">
             {links.map(link => (
-              <a key={link} href={`#${link.toLowerCase()}`} className="text-sm font-semibold text-gray-600 hover:text-corporate-primary transition-colors">
+              <a key={link} href={`#${link.toLowerCase()}`} className="text-sm font-semibold hover:text-gray-300 transition-colors">
                 {link}
               </a>
             ))}
@@ -36,7 +36,7 @@ export default function Navbar() {
                 key={link} 
                 href={`#${link.toLowerCase()}`} 
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-corporate-primary rounded-md"
+                className="block px-3 py-2 text-base font-medium hover:bg-gray-200 hover:text-gray-300 rounded-md"
               >
                 {link}
               </a>

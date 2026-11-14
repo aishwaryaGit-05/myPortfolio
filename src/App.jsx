@@ -1,124 +1,166 @@
-import { portfolioData } from './data';
+import { portfolioData, projectData } from './data';
 import Navbar from './components/Navbar';
 import Section from './components/Section';
 import { Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import She from './assets/fullstack.png';
+import Aish from './assets/aishu1.jpg';
+import { motion } from "framer-motion";
+import { useState } from 'react';
+import ProjectModal from './components/ProjectModal';
+
 
 export default function App() {
+  const [selectedProject, setSelectedProject] = useState(null);
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <p className="text-corporate-primary font-bold tracking-wide uppercase mb-4 text-sm">Professional Portfolio</p>
-          <h1 className="text-5xl lg:text-7xl font-bold text-corporate mb-6 leading-tight">
-            {portfolioData.name}
-          </h1>
-          <p className="text-xl lg:text-2xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
-            {portfolioData.role} — {portfolioData.tagline}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a href="#projects" className="bg-corporate-primary hover:bg-corporate-accent text-white px-7 py-3 rounded-md font-semibold transition-colors">
-              View Case Studies
-            </a>
-            <a href="#contact" className="border border-gray-300 hover:border-corporate-primary hover:text-corporate-primary px-7 py-3 rounded-md font-semibold transition-colors text-corporate">
-              Get in Touch
-            </a>
+      <section className="px-4 sm:px-6 lg:px-10 pt-20 pb-16 lg:pt-28 lg:pb-15">
+        <div className="relative mx-auto">
+          <motion.div
+            className="hero-orb"
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            whileHover={{ scale: 1.08, rotateY: 12, rotateX: 10, y: -8 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.3 }}
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-2 mx-auto lg:px-8 portfolio-frame p-5 sm:p-7 hover:shadow-lg transition-shadow duration-300 min-h-[60vh] lg:min-h-[80vh] gap-6 lg:gap-8 relative overflow-hidden">
+            <div className="w-full flex flex-col justify-center order-2 lg:order-1">
+              <p className="text-base sm:text-lg color-white-600 mb-4 sm:mb-6">
+                {portfolioData.greetings}
+              </p>
+              <div className="grid gap-3 sm:gap-4">
+                <p className="text-base sm:text-lg color-white-600">
+                  {portfolioData.selfTag}
+                </p>
+                <h1 className="zero-margin color-white-600 text-2xl sm:text-4xl lg:text-6xl font-bold leading-tight">
+                  {portfolioData.name}
+                </h1>
+              </div>
+              <p className="color-white-600 mt-5 sm:mt-6 max-w-2xl leading-relaxed text-sm sm:text-base lg:text-lg">
+                {portfolioData.role} — {portfolioData.tagline}
+              </p>
+            </div>
+            <div className="w-full flex justify-center items-center order-1 lg:order-2">
+              {She && <img src={She} alt="Aishwarya" className="rounded-lg w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[420px] h-auto object-cover" height="300" width="300" />}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <Section id="about" title="Professional Summary" bg="bg-corporate-light">
-        <p className="text-lg text-gray-700 leading-relaxed max-w-4xl">
-          {portfolioData.about}
-        </p>
-      </Section>
-
-      {/* Skills Section */}
-      <Section id="skills" title="Core Competencies" bg="bg-white">
-        <div className="flex flex-wrap gap-3">
-          {portfolioData.skills.map((skill, index) => (
-            <span key={index} className="px-4 py-2 bg-gray-50 text-corporate font-semibold text-sm rounded-md border border-gray-200">
-              {skill}
-            </span>
-          ))}
+      <Section id="about">
+        <div className='grid grid-cols-1 gap-6 xl:grid-cols-2 max-w-none'>
+          <motion.div initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div className="relative max-w-none">
+              <motion.div
+                className="about-orb"
+                initial={{ opacity: 0, scale: 0.8, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                whileHover={{ scale: 1.08, rotateY: 12, rotateX: 10, y: -8 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                viewport={{ once: true, amount: 0.3 }}
+              />
+              <div className='animate-fade-up grid grid-cols-1 w-full portfolio-frame min-h-[60vh] sm:p-6 gap-5 max-w-none'>
+                <div className='flex justify-center lg:justify-start'>
+                  {Aish && <img src={Aish} alt="Aishwarya" className="rounded-lg w-full max-w-[220px] sm:max-w-[160px] h-auto object-cover"/>}
+                </div>
+                <div className='p-0'>
+                  <p className="text-base sm:text-lg font-semibold mb-3 pb-5 uppercase">About me</p>
+                  <p className="max-w-4xl text-sm sm:text-base leading-relaxed">
+                    {portfolioData.about}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-base sm:text-lg font-semibold mb-3 uppercase">My Projects</p>
+                </div>
+                <div id='projects' className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'>
+                  {projectData.map((project, index) => (
+                    <div key={index} className="responsive-project-card hover:shadow-lg transition-shadow duration-300 flex flex-col border border-orange-500/30 bg-[#1a1513] shadow-2xl p-4 sm:p-6 rounded-2xl">
+                      <h3 className="font-bold mb-3 text-sm sm:text-base">{project.title}</h3>
+                      <p className="mb-6 text-xs sm:text-sm line-clamp-3 leading-relaxed">{project.category}</p>
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        {project.technologies.map((tech, i) => (
+                          <span key={i} className="text-[10px] sm:text-xs font-bold">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                      <a onClick={() => setSelectedProject(project)} className="inline-flex items-center text-xs sm:text-sm font-bold hover:text-gray-300 transition-colors mt-auto cursor-pointer">
+                        View Details <ExternalLink size={16} className="ml-1.5" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7 }}>
+             {/* Skills Section */}
+              <div id="skills" className='grid grid-cols-1 gap-4 -translate-y-0 lg:-translate-y-12 w-full portfolio-frame min-h-[60vh] p-4 sm:p-6 lg:p-8 animate-fade-up [animation-delay:200ms]'>
+                <div className="pb-5">
+                  <p className="text-base sm:text-lg font-semibold uppercase">My Skills</p>
+                </div>
+                <div className="space-y-4">
+                  {Object.entries(portfolioData.skills).map(([category, skillList]) => (
+                    <div key={category}>
+                      <h3 className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-gray-300 mb-2">
+                        {category.replace(/([A-Z])/g, ' $1').trim()}
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {skillList.map((skill, index) => (
+                          <span key={`${category}-${index}`} className="responsive-skill-chip text-[10px] sm:text-xs px-2 py-1 rounded-full border border-orange-500/30 bg-[#1a1513] text-white">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className='contact-style mt-4 sm:mt-6'>
+                <p className="mb-8 text-sm sm:text-base lg:text-lg leading-relaxed">
+                  Available for leadership roles and enterprise consultancy opportunities. Connect with me to discuss how my expertise aligns with your organizational goals.
+                </p>
+                <div className="space-y-4 sm:space-y-5 flex flex-col justify-center items-center mt-4">
+                  <div className="flex items-center margin-bottom-1 text-sm sm:text-base">
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-3" />
+                    <a href={`mailto:${portfolioData.email}`} className="hover:text-gray-300 font-small break-all" style={{ 'fontSize': '16px'}}>{portfolioData.email}</a>
+                  </div>
+                  <div className="flex items-center margin-bottom-1 text-sm sm:text-base">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-3" />
+                    <span className="font-small" style={{ 'fontSize': '16px'}}>{portfolioData.phone}</span>
+                  </div>
+                  <div className="flex items-center margin-bottom-1 font-medium sm:text-base">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-3" />
+                    <span className="font-small" style={{ 'fontSize': '16px'}}>{portfolioData.location}</span>
+                  </div>
+                </div>
+              </div>
+              </div>  
+          </motion.div>
         </div>
-      </Section>
-
-      {/* Projects Section */}
-      <Section id="projects" title="Featured Projects" bg="bg-corporate-light">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolioData.projects.map((project, index) => (
-            <div key={index} className="bg-white border border-gray-200 rounded-lg p-7 hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-xl font-bold mb-3 text-corporate">{project.title}</h3>
-              <p className="text-gray-600 mb-6 text-sm line-clamp-3 leading-relaxed">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {project.tech.map((tech, i) => (
-                  <span key={i} className="text-xs font-bold text-corporate-primary bg-blue-50 px-2.5 py-1 rounded">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <a href={project.link} className="inline-flex items-center text-sm font-bold text-corporate hover:text-corporate-primary transition-colors mt-auto">
-                View Details <ExternalLink size={16} className="ml-1.5"/>
-              </a>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Contact Section */}
-      <Section id="contact" title="Contact Information" bg="bg-white">
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <p className="text-gray-600 mb-8 text-lg">
-              Available for leadership roles and enterprise consultancy opportunities. Connect with me to discuss how my expertise aligns with your organizational goals.
-            </p>
-            <div className="space-y-5">
-              <div className="flex items-center text-gray-700">
-                <Mail className="w-5 h-5 mr-4 text-corporate-primary" />
-                <a href={`mailto:${portfolioData.email}`} className="hover:text-corporate-primary font-medium">{portfolioData.email}</a>
-              </div>
-              <div className="flex items-center text-gray-700">
-                <Phone className="w-5 h-5 mr-4 text-corporate-primary" />
-                <span className="font-medium">{portfolioData.phone}</span>
-              </div>
-              <div className="flex items-center text-gray-700">
-                <MapPin className="w-5 h-5 mr-4 text-corporate-primary" />
-                <span className="font-medium">{portfolioData.location}</span>
-              </div>
-            </div>
-          </div>
-
-          <form className="space-y-4 bg-gray-50 p-8 rounded-lg border border-gray-200" onSubmit={(e) => e.preventDefault()}>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Name</label>
-              <input type="text" className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-corporate-primary focus:border-transparent outline-none transition-all" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
-              <input type="email" className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-corporate-primary focus:border-transparent outline-none transition-all" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Message</label>
-              <textarea rows="4" className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-corporate-primary focus:border-transparent outline-none transition-all"></textarea>
-            </div>
-            <button type="submit" className="w-full bg-corporate-primary hover:bg-corporate-accent text-white py-3 rounded-md font-bold transition-colors mt-2">
-              Send Message
-            </button>
-          </form>
-        </div>
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
       </Section>
 
       {/* Footer */}
-      <footer className="bg-corporate text-white py-10 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm font-medium">© {new Date().getFullYear()} {portfolioData.name}. All rights reserved.</p>
-          <div className="flex space-x-6">
+      <footer className="text-white py-10 border-t border-gray-800">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-400 text-xs sm:text-sm font-medium text-center md:text-left">© {new Date().getFullYear()} {portfolioData.name}. All rights reserved.</p>
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
             {portfolioData.socials.map((social, index) => (
-              <a key={index} href={social.url} className="text-gray-400 hover:text-white transition-colors text-sm font-medium">
+              <a key={index} href={social.url} className="text-gray-400 hover:text-gray-300 transition-colors text-xs sm:text-sm font-medium">
                 {social.platform}
               </a>
             ))}
